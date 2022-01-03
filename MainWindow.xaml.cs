@@ -72,7 +72,7 @@ namespace Proiect_Iosib_Alexandra
             furnizoriVSource.Source = ctx.Furnizoris.Local;
             ctx.Furnizoris.Load();
 
-            clientiComenziClientiVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientiComenziClientiViewSource")));
+            clientiComenziClientiVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("clientiComenziClientisViewSource")));
             //clientiComenziClientiVSource.Source = ctx.ComenziClientis.Local;
             ctx.ComenziClientis.Load();
 
@@ -93,6 +93,9 @@ namespace Proiect_Iosib_Alexandra
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             action = ActionState.Edit;
+            BindingOperations.ClearBinding(prenumeTextBox, TextBox.TextProperty);
+            BindingOperations.ClearBinding(numeTextBox, TextBox.TextProperty);
+            SetValidationBinding();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -340,6 +343,8 @@ namespace Proiect_Iosib_Alexandra
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+           
+            SetValidationBinding();
             TabItem ti = tbCtrlAprozar.SelectedItem as TabItem;
             switch (ti.Header)
             {
@@ -451,6 +456,28 @@ namespace Proiect_Iosib_Alexandra
                                  prod.TaraOrigine
                              };
             clientiComenziClientiVSource.Source = queryComenziClienti.ToList();
+        }
+
+        private void SetValidationBinding()
+        {
+            Binding prenumeValidationBinding = new Binding();
+            prenumeValidationBinding.Source = clientiVSource;
+            prenumeValidationBinding.Path = new PropertyPath("Prenume");
+            prenumeValidationBinding.NotifyOnValidationError = true;
+            prenumeValidationBinding.Mode = BindingMode.TwoWay;
+            prenumeValidationBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            //string required
+            prenumeValidationBinding.ValidationRules.Add(new StringNotEmpty());
+            prenumeTextBox.SetBinding(TextBox.TextProperty, prenumeValidationBinding);
+            Binding numeValidationBinding = new Binding();
+            numeValidationBinding.Source = clientiVSource;
+            numeValidationBinding.Path = new PropertyPath("Nume");
+            numeValidationBinding.NotifyOnValidationError = true;
+            numeValidationBinding.Mode = BindingMode.TwoWay;
+            numeValidationBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            //string min length validator
+            numeValidationBinding.ValidationRules.Add(new StringMinLengthValidator());
+            numeTextBox.SetBinding(TextBox.TextProperty, numeValidationBinding); //setare binding nou
         }
     }
 }
