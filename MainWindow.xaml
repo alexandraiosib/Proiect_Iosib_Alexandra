@@ -187,7 +187,9 @@
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} {1}">
                                             <Binding Path="Prenume"/>
+
                                             <Binding Path="Nume"/>
+
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>

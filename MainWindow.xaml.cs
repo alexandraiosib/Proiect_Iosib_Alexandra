@@ -76,9 +76,11 @@ namespace Proiect_Iosib_Alexandra
             //clientiComenziClientiVSource.Source = ctx.ComenziClientis.Local;
             ctx.ComenziClientis.Load();
 
-            //cmbClienti.DisplayMemberPath = "Nume";
-            cmbClienti.SelectedValuePath = "ClientId";
 
+            cmbClienti.ItemsSource = ctx.Clientis.Local;
+            //cmbClienti.DisplayMemberPath = "Nume";
+            cmbClienti.SelectedValuePath = "CustId";
+            cmbProduse.ItemsSource = ctx.Produses.Local;
             //cmbProduse.DisplayMemberPath = "Denumire";
             cmbProduse.SelectedValuePath = "ProdusId";
 
@@ -454,6 +456,7 @@ namespace Proiect_Iosib_Alexandra
                                  prod.Denumire,
                                  prod.Pret,
                                  prod.TaraOrigine
+                                 
                              };
             clientiComenziClientiVSource.Source = queryComenziClienti.ToList();
         }
